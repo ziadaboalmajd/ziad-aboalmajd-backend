@@ -9,8 +9,7 @@
     "build": "npx tsc",
     "start": "node ./build/server.js",
     "lint": "eslint . --ext .ts ",
-    "tsc": "tsc",
-    "prettier": "prettier --write"
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "",
