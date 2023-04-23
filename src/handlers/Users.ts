@@ -41,9 +41,9 @@ const usersRoutes = (app: express.Application) => {
 
 const createUser = async (req: Request, res: Response) => {
     const user = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
+        name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase(),
+        email: req.body.email.replace(/\s/g, "").toLowerCase(),
+        password: req.body.password.replace(/^\s+|\s+$/gm, '').toLowerCase()
     };
     try {
         const results = await UserStore.createUser(user);
@@ -67,8 +67,8 @@ const createUser = async (req: Request, res: Response) => {
 
 const authenticate = async (req: Request, res: Response) => {
     const user = {
-        name: req.body.name,
-        password: req.body.password
+        name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase(),
+        password: req.body.password.replace(/^\s+|\s+$/gm, '').toLowerCase()
     };
     try {
         const results = await UserStore.authenticate(user);
@@ -93,7 +93,7 @@ const verifyAuthToken = async (req: Request, res: Response) => {
     try {
         if (req.session.user && req.session.user.username && req.session.user.token) {
             const user = {
-                username: req.session.user.username,
+                username: req.session.user.username.replace(/^\s+|\s+$/gm, '').toLowerCase(),
                 token: req.session.user.token
             };
             const authorizationHeader: string = user.token as string;
@@ -119,7 +119,7 @@ const updatePass = async (req: Request, res: Response) => {
         const user = {
             name: req.session.user.name,
             pass: req.body.pass,
-            cpass: req.body.cpass,
+            cpass: req.body.cpass.replace(/^\s+|\s+$/gm, '').toLowerCase(),
         };
         try {
             const results = await UserStore.updatePass(user);
@@ -188,7 +188,7 @@ const getComment = async (req: Request, res: Response) => {
 };
 
 const sendMail = async (req: Request, res: Response) => {
-    const email = req.body.to;
+    const email = req.body.to.replace(/\s/g, "").toLowerCase();
     const resCode = Math.floor(100000 + Math.random() * 900000);
     const results = await UserStore.getUsername(email);
     const reseny = (results as any);

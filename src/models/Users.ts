@@ -18,12 +18,12 @@ export class userStore {
                 return { "login": false, "message": 'Please enter all the details' } as any;
             }
             //Check if the user already exist or not
-            const userExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM users WHERE name = '${user.name.replace(/^\s+|\s+$/gm, '')}');`);
+            const userExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM users WHERE name = '${user.name}');`);
             if (userExist.rows[0].exists === true) {
                 return { "login": false, "message": 'this username already exists' } as any;
             }
             //Check if the email already exist or not
-            const emailExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM users WHERE email = '${user.email.replace(/\s/g, "")}');`);
+            const emailExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM users WHERE email = '${user.email}');`);
             if (emailExist.rows[0].exists === true) {
                 return { "login": false, "message": 'this email already exists' } as any;
             }
@@ -31,7 +31,7 @@ export class userStore {
             const saltRound = process.env.SALT_ROUNDS as string;
             const salt = await bcrypt.genSalt(Number(saltRound));
             const passwordHashed = bcrypt.hashSync(user.password + pepper, parseInt(salt));
-            const response = await pool.query('INSERT INTO users (name, email, token) VALUES ($1, $2, $3)', [user.name.replace(/^\s+|\s+$/gm, ''), user.email.replace(/\s/g, ""), passwordHashed]);
+            const response = await pool.query('INSERT INTO users (name, email, token) VALUES ($1, $2, $3)', [user.name, user.email, passwordHashed]);
             return { "login": true, "message": 'sign up Successfully' } as any;
         } catch (err: any) {
             return err + user;
