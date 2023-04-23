@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "clean": "rm -rf  ./build/server.js|| true",
-    "cleanj": "rm -rf  package-lock.json|| true",
-    "build": "npmr run clean && npm run cleanj && npx tsc",
+    "build": "npm run clean && npx tsc",
     "start": "node ./build/server.js",
     "lint": "eslint . --ext .ts ",
     "tsc": "tsc",
