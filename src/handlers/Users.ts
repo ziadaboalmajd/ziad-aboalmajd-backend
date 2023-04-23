@@ -37,7 +37,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/comment/delete', deleteComment);
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
-}
+};
 
 const createUser = async (req: Request, res: Response) => {
     const user = {
@@ -56,7 +56,7 @@ const createUser = async (req: Request, res: Response) => {
                 // id: resId,
                 username: (user.name),
                 token: token
-            }
+            };
         }
         return res.status(200).json({ message: resAny.message, login: resAny.login, user: user.name });
     } catch (err) {
@@ -81,7 +81,7 @@ const authenticate = async (req: Request, res: Response) => {
                 // id: resId,
                 username: (user.name),
                 token: token
-            }
+            };
         }
         return res.status(200).json({ message: resAny.message, login: resAny.login, user: user.name });
     } catch (err) {
@@ -95,22 +95,22 @@ const verifyAuthToken = async (req: Request, res: Response) => {
             const user = {
                 username: req.session.user.username,
                 token: req.session.user.token
-            }
+            };
             const authorizationHeader: string = user.token as string;
             const token = authorizationHeader;
             const decoded = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
             const results = await UserStore.verifyAuthToken(user, decoded);
             const resAny = results as any;
             if (!resAny.login) {
-                return res.json({ login: false })
+                return res.json({ login: false });
             }
-            return res.json({ login: resAny.login, user: user.username })
+            return res.json({ login: resAny.login, user: user.username });
         } else {
             return res.status(200).json({ message: "error", login: false });
         }
     }
     catch (err) {
-        return err as any
+        return err as any;
     }
 };
 
@@ -120,11 +120,11 @@ const updatePass = async (req: Request, res: Response) => {
             name: req.session.user.name,
             pass: req.body.pass,
             cpass: req.body.cpass,
-        }
+        };
         try {
             const results = await UserStore.updatePass(user);
             const resAny = results as any;
-            return res.json({ message: resAny.message, login: resAny.login, user: user.name })
+            return res.json({ message: resAny.message, login: resAny.login, user: user.name });
         } catch (err) {
             res.status(400);
             res.json(err);
@@ -140,7 +140,7 @@ const signout = async (req: Request, res: Response) => {
             delete req.session.user;
             return res.json({ login: false });
         }
-        return res.json("error")
+        return res.json("error");
     } catch (err) {
         res.status(400);
         res.json(err);
@@ -154,7 +154,7 @@ const deleteComment = async (req: Request, res: Response) => {
     try {
         const results = await UserStore.deleteComment(user);
         const resAny = results as any;
-        return res.json({ delete: resAny.delete})
+        return res.json({ delete: resAny.delete });
     } catch (err) {
         res.status(400);
         res.json(err);
@@ -169,7 +169,7 @@ const postComment = async (req: Request, res: Response) => {
     };
     try {
         const results = await UserStore.postComment(user);
-        return res.json(results)
+        return res.json(results);
     } catch (err) {
         res.status(400);
         res.json(err);
@@ -180,7 +180,7 @@ const getComment = async (req: Request, res: Response) => {
 
     try {
         const results = await UserStore.getComment();
-        return res.json(results)
+        return res.json(results);
     } catch (err) {
         res.status(400);
         res.json(err);
@@ -193,7 +193,7 @@ const sendMail = async (req: Request, res: Response) => {
     const results = await UserStore.getUsername(email);
     const reseny = (results as any);
     if (!reseny.exists) {
-        return res.status(200).send({ message: 'Wrong email', sent: false })
+        return res.status(200).send({ message: 'Wrong email', sent: false });
     }
     const resAny = (results as any).response;
     const mailData = {
@@ -291,10 +291,10 @@ const sendMail = async (req: Request, res: Response) => {
     req.session.user = {
         code: resCode,
         name: resAny[0].name
-    }
+    };
     transporter.sendMail(mailData, (error, info) => {
-        if (error) { return res.send(error) }
-        return res.status(200).send({ message: "email has been sent", sent: true })
+        if (error) { return res.send(error); }
+        return res.status(200).send({ message: "email has been sent", sent: true });
     });
 };
 
@@ -304,17 +304,17 @@ const verifyReset = async (req: Request, res: Response) => {
             const user = {
                 code: req.session.user.code,
                 name: req.session.user.name
-            }
+            };
             return res.status(200).json({
                 code: user.code,
                 name: user.name
-            })
+            });
         } else {
             return res.status(400).send("error");
         }
     }
     catch (err) {
-        return err as any
+        return err as any;
     }
 };
 
