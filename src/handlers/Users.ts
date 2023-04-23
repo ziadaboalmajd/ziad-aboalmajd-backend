@@ -37,6 +37,20 @@ const usersRoutes = (app: express.Application) => {
     app.post('/comment/delete', deleteComment);
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
+    app.get('/test/', test);
+};
+
+const test = async (req: Request, res: Response) => {
+    try {
+        req.session.user = {
+            username: "(user.name)",
+            token: "token"
+        };
+        return res.json({ req: req.session, get: "ziad" });
+    } catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 };
 
 const createUser = async (req: Request, res: Response) => {
