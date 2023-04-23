@@ -24,7 +24,7 @@ const address: string = "0.0.0.:3000";
 
 // app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
 const corsOption = {
-  origin: 'http://localhost:3000',
+  origin: 'https://ziadaboalmajd.github.io',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
