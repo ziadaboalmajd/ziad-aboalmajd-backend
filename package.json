@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
 
-  "main": "index.ts",
+  "main": "server.ts",
   "scripts": {
     "install": "npm install",
     "build": "npx tsc",
