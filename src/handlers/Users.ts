@@ -27,14 +27,10 @@ const transporter = nodemailer.createTransport({
 const UserStore = new userStore();
 
 const usersRoutes = (app: express.Application) => {
-    app.get('/users/', getUsers);
-    app.get('/users/:id', getUserById);
     app.post('/signup/', createUser);
     app.post('/login/', authenticate);
     app.get('/login/', verifyAuthToken);
-    app.put('/updateuser/', updateUser);
     app.post('/user/updatepass/', updatePass);
-    app.delete('/deleteuser/', deleteUser);
     app.get('/signout/', signout);
     app.get('/comment/', getComment);
     app.post('/comment/', postComment);
@@ -42,26 +38,6 @@ const usersRoutes = (app: express.Application) => {
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
 }
-
-const getUsers = async (req: Request, res: Response) => {
-    try {
-        const results = await UserStore.getUsers();
-        res.json(results);
-    } catch (err) {
-        res.status(400);
-        res.json(err);
-    }
-};
-
-const getUserById = async (req: Request, res: Response) => {
-    try {
-        const results = await UserStore.getUserById(Number(req.params.id));
-        res.json(results);
-    } catch (err) {
-        res.status(400);
-        res.json(err);
-    }
-};
 
 const createUser = async (req: Request, res: Response) => {
     const user = {
@@ -138,22 +114,6 @@ const verifyAuthToken = async (req: Request, res: Response) => {
     }
 };
 
-const updateUser = async (req: Request, res: Response) => {
-    const user = {
-        name: req.body.name,
-        password: req.body.password,
-        newName: req.body.newName,
-        newPassword: req.body.newPassword
-    };
-    try {
-        const results = await UserStore.updateUser(user);
-        res.json(results);
-    } catch (err) {
-        res.status(400);
-        res.json(err);
-    }
-};
-
 const updatePass = async (req: Request, res: Response) => {
     if (req.session.user) {
         const user = {
@@ -171,21 +131,6 @@ const updatePass = async (req: Request, res: Response) => {
         }
     } else {
         res.status(400).send("err");
-    }
-};
-
-const deleteUser = async (req: Request, res: Response) => {
-    const user = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-    };
-    try {
-        const results = await UserStore.deleteUser(user);
-        res.json(results);
-    } catch (err) {
-        res.status(400);
-        res.json(err);
     }
 };
 
