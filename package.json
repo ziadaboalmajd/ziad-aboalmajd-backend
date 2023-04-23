@@ -2,9 +2,7 @@
   "name": "ziad-aboalmajd-backend",
   "version": "1.0.0",
   "description": "",
-  "engines": {
-    "node": "18.15.0"
-  },
+
   "main": "index.ts",
   "scripts": {
     "install": "npm install",
