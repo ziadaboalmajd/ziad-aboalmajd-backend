@@ -44,6 +44,7 @@ app.use(session({
   name: "usr",
   // resave: false,
   // saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     // secure: ENVIRONMENT === "production" ? true : "auto",
     // httpOnly: true,
