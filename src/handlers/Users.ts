@@ -37,7 +37,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/comment/delete', deleteComment);
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
-    app.get('/test/', test);
+    // app.get('/test/', test);
 };
 
 const test = async (req: Request, res: Response) => {
