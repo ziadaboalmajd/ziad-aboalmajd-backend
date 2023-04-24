@@ -42,13 +42,13 @@ app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
   name: "usr",
-  resave: false,
-  saveUninitialized: false,
+  // resave: false,
+  // saveUninitialized: false,
   cookie: {
-    secure: ENVIRONMENT === "production" ? true : "auto",
-    httpOnly: true,
+    // secure: ENVIRONMENT === "production" ? true : "auto",
+    // httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
-    sameSite: ENVIRONMENT === "production" ? "none" : "lax",
+    // sameSite: ENVIRONMENT === "production" ? "none" : "lax",
   }
 } as SessionOptions
 ));
