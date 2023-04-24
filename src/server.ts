@@ -48,7 +48,8 @@ app.use(session({
     secure: true,
     httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
-    sameSite: "none"
+    sameSite: "none",
+    domain: 'ziadaboalmajd.github.io',
   }
 } as SessionOptions
 ));
