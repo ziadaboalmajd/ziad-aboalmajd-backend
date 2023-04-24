@@ -42,16 +42,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
-  name: "usr",
-  // resave: false,
+  name: 'usr',
+  resave: false,
+  proxy: true,
   // saveUninitialized: false,
   saveUninitialized: true,
   cookie: {
     // secure: ENVIRONMENT === "production" ? true : "auto",
-    secure: false,
-    httpOnly: true,
+    secure: true,
+    httpOnly: false,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
-    // sameSite: ENVIRONMENT === "production" ? "none" : "lax",
+    sameSite: 'none',
   }
 } as SessionOptions
 ));
