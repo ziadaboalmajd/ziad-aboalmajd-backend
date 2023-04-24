@@ -46,7 +46,7 @@ app.use(session({
   resave: false,
   proxy: true,
   // saveUninitialized: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     // secure: ENVIRONMENT === "production" ? true : "auto",
     secure: true,
