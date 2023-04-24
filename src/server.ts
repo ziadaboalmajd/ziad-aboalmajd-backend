@@ -48,7 +48,7 @@ app.use(session({
     secure: ENVIRONMENT === "production" ? "true" : "auto",
     httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
-    sameSite: ENVIRONMENT === "production" ? "none" : "lax",
+    sameSite: "none",
   }
 } as SessionOptions
 ));
