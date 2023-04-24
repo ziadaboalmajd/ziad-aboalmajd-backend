@@ -52,7 +52,7 @@ app.use(session({
     secure: true,
     httpOnly: false,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
-    sameSite: 'lax',
+    sameSite: 'none',
   }
 } as SessionOptions
 ));
