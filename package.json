@@ -9,6 +9,7 @@
     "start": "node ./build/server.js",
     "lint": "eslint . --ext .ts ",
     "tsc": "tsc",
+    "watch": "watch",
     "prettier": "prettier --write"
   },
   "keywords": [],
