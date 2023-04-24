@@ -51,7 +51,7 @@ const test = async (req: Request, res: Response) => {
                 n: 1
             };
         }
-        return res.json({ req: req.session, get: "ziad" });
+        return res.json({ req: req.session, get: "ziad", n: req.session.user.n });
     } catch (err) {
         res.status(400);
         res.json(err);
