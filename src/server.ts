@@ -24,10 +24,10 @@ const address: string = "0.0.0.:3000";
 
 // app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
 const corsOption = {
-  origin: 'https://ziadaboalmajd.github.io',
+  // origin: 'https://ziadaboalmajd.github.io',
+  origin: 'https://ziadaboalmajd.github.io/ZiadAboalmajd/',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
-  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD']
 };
 
 app.use(cors(corsOption));
@@ -46,10 +46,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: "auto",
+    secure: ENVIRONMENT === "production" ? true : "auto",
     httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
-    sameSite: "lax",
+    sameSite: ENVIRONMENT === "production" ? "none" : "lax",
   }
 } as SessionOptions
 ));
