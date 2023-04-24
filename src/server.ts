@@ -45,7 +45,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    secure: "auto",
     httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
     sameSite: "lax",
