@@ -27,6 +27,7 @@ const corsOption = {
   origin: 'https://ziadaboalmajd.github.io',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD']
 };
 
 app.use(cors(corsOption));
