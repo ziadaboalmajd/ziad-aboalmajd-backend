@@ -42,10 +42,15 @@ const usersRoutes = (app: express.Application) => {
 
 const test = async (req: Request, res: Response) => {
     try {
-        req.session.user = {
-            username: "(user.name)",
-            token: "token"
-        };
+        if (req.session.user) {
+            req.session.user = {
+                n: 1 + req.session.user.n
+            };
+        } else {
+            req.session.user = {
+                n: 1
+            };
+        }
         return res.json({ req: req.session, get: "ziad" });
     } catch (err) {
         res.status(400);
