@@ -48,7 +48,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     // secure: ENVIRONMENT === "production" ? true : "auto",
-    // httpOnly: true,
+    secure: false,
+    httpOnly: true,
     expires: 1000 * 60 * 60 * 24 * 7 as any,
     // sameSite: ENVIRONMENT === "production" ? "none" : "lax",
   }
