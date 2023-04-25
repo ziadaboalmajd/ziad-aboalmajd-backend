@@ -218,7 +218,7 @@ const sendMail = async (req: Request, res: Response) => {
     const mailData = {
         from: 'ziadaboalmagd092@gmail.com',
         to: email,
-        subject: "reset your password",
+        subject: "reset your password " + resAny[0].name + "-" + resCode.toString().slice(0, 2),
         text: "you request to reset your passowrd",
         html: `
         <!doctype html>
