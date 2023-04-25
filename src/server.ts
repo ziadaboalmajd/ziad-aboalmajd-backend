@@ -57,11 +57,11 @@ const sessionStore = new PostgresqlStore({
 const sessionConfig = {
   store: new pgSession({
     pool: pool,
-    tableName: 'session'
+    tableName: 'usr_session'
   }),
   name: 'usr',
   secret: COOKIE_SECRET ? COOKIE_SECRET : "XAFDSAD",
-  resave: true,
+  resave: false,
   // resave: false,
   proxy: true,
   saveUninitialized: false,
