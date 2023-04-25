@@ -1,5 +1,5 @@
 // import express, { Request, Response} from "express";
-import express, { Application } from "express";
+import express from "express";
 
 import cors from 'cors';
 
@@ -9,13 +9,19 @@ import usersRoutes from "./handlers/Users";
 
 import session, { SessionOptions } from 'express-session';
 
+import genFunc from 'connect-pg-simple';
+
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const {
   COOKIE_SECRET,
-  ENVIRONMENT,
+  POSTGRES_HOST,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_NAME,
+  POSTGRES_PORT,
 } = process.env;
 
 const app: express.Application = express();
@@ -38,13 +44,17 @@ const port = 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const PostgresqlStore = genFunc(session);
+const sessionStore = new PostgresqlStore({
+  conString: "postgres://" + POSTGRES_USER + ":" + POSTGRES_PASSWORD + "@" + POSTGRES_HOST + ":" + POSTGRES_PORT + "/" + POSTGRES_NAME,
+});
 
 app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
   name: 'usr',
-  resave: true,
-  // resave: false,
+  // resave: true,
+  resave: false,
   proxy: true,
   // saveUninitialized: false,
   saveUninitialized: false,
@@ -55,7 +65,8 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 * 7 * 4 as any,
     expires: 1000 * 60 * 60 * 24 * 7 * 4 as any,
     sameSite: 'none',
-  }
+  },
+  store: sessionStore
 } as SessionOptions
 ));
 
