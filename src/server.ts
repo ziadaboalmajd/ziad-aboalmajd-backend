@@ -11,8 +11,11 @@ import usersRoutes from "./handlers/Users";
 
 import session from 'express-session';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pgSession = require('connect-pg-simple')(session);
+import ConnetPg from "connect-pg-simple";
+
+const pgSession = ConnetPg(session);
+
+  (session);
 
 import dotenv from 'dotenv';
 
