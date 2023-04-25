@@ -69,9 +69,9 @@ export class userStore {
             const logPass = response.rows[0].token;
             const isPasswordMatched = bcrypt.compareSync(String(decoded) + pepper, logPass);
             if (!isPasswordMatched) {
-                return { "login": false, isPasswordMatched: isPasswordMatched } as any;
+                return { "login": false } as any;
             }
-            return { "login": true, isPasswordMatched: isPasswordMatched } as any;
+            return { "login": true } as any;
         } catch (error) {
             return error as any;
         }
