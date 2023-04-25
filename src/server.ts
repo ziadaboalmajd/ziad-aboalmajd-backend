@@ -1,15 +1,18 @@
 // import express, { Request, Response} from "express";
 import express from "express";
 
+import pool from './database';
+
 import cors from 'cors';
 
 import bodyParser from "body-parser";
 
 import usersRoutes from "./handlers/Users";
 
-import session, { SessionOptions } from 'express-session';
+import session from 'express-session';
 
-import genFunc from 'connect-pg-simple';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pgSession = require('connect-pg-simple')(session);
 
 import dotenv from 'dotenv';
 
@@ -44,17 +47,39 @@ const port = 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+/*
 const PostgresqlStore = genFunc(session);
 const sessionStore = new PostgresqlStore({
   conString: "postgres://" + POSTGRES_USER + ":" + POSTGRES_PASSWORD + "@" + POSTGRES_HOST + ":" + POSTGRES_PORT + "/" + POSTGRES_NAME,
 });
+*/
 
+const sessionConfig = {
+  store: new pgSession({
+    pool: pool,
+    tableName: 'session'
+  }),
+  name: 'SID',
+  secret: COOKIE_SECRET ? COOKIE_SECRET : "XAFDSAD",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    aameSite: true,
+    secure: false // ENABLE ONLY ON HTTPS
+  }
+};
+
+app.use(session(sessionConfig));
+
+
+/*
 app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
   name: 'usr',
-  // resave: true,
-  resave: false,
+  resave: true,
+  // resave: false,
   proxy: true,
   // saveUninitialized: false,
   saveUninitialized: false,
@@ -68,7 +93,7 @@ app.use(session({
   },
   store: sessionStore
 } as SessionOptions
-));
+));*/
 
 usersRoutes(app);
 
