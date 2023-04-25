@@ -1,5 +1,5 @@
 import pool from '../database';
-import  { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 import { QueryResult } from 'pg';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
@@ -69,9 +69,9 @@ export class userStore {
             const logPass = response.rows[0].token;
             const isPasswordMatched = bcrypt.compareSync(String(decoded) + pepper, logPass);
             if (!isPasswordMatched) {
-                return { "login": false } as any;
+                return { "login": false, isPasswordMatched: isPasswordMatched } as any;
             }
-            return { "login": true } as any;
+            return { "login": true, isPasswordMatched: isPasswordMatched } as any;
         } catch (error) {
             return error as any;
         }

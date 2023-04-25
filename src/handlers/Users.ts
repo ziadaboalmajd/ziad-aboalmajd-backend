@@ -104,7 +104,7 @@ const verifyAuthToken = async (req: Request, res: Response) => {
             // if (!resAny.login) {
             //     return res.json({ login: false, res: resAny.login});
             // }
-            return res.json({ login: resAny.login, user: user.username });
+            return res.json({ login: resAny.login, user: user.username, decoded: decoded, ispass: resAny.isPasswordMatched });
         } else {
             return res.status(200).json({ message: "error", login: false });
         }
