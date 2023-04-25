@@ -59,14 +59,17 @@ const sessionConfig = {
     pool: pool,
     tableName: 'session'
   }),
-  name: 'SID',
+  name: 'usr',
   secret: COOKIE_SECRET ? COOKIE_SECRET : "XAFDSAD",
-  resave: false,
-  saveUninitialized: true,
+  resave: true,
+  // resave: false,
+  proxy: true,
+  saveUninitialized: false,
+  // saveUninitialized: true,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    aameSite: true,
-    secure: false // ENABLE ONLY ON HTTPS
+    sameSite: false,
+    secure: true // ENABLE ONLY ON HTTPS
   }
 };
 
