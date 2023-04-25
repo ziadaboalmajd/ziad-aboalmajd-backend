@@ -101,9 +101,9 @@ const verifyAuthToken = async (req: Request, res: Response) => {
             const decoded = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
             const results = await UserStore.verifyAuthToken(user, decoded);
             const resAny = results as any;
-            if (!resAny.login) {
-                return res.json({ login: false });
-            }
+            // if (!resAny.login) {
+            //     return res.json({ login: false, res: resAny.login});
+            // }
             return res.json({ login: resAny.login, user: user.username });
         } else {
             return res.status(200).json({ message: "error", login: false });
