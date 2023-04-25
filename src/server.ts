@@ -44,6 +44,7 @@ app.use(session({
   credentials: true,
   name: 'usr',
   resave: true,
+  // resave: false,
   proxy: true,
   // saveUninitialized: false,
   saveUninitialized: false,
@@ -51,8 +52,8 @@ app.use(session({
     // secure: ENVIRONMENT === "production" ? true : "auto",
     secure: true,
     httpOnly: false,
-    maxAge: 1000 * 60 * 60 * 24 * 7 as any,
-    expires: 1000 * 60 * 60 * 24 * 7 as any,
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 4 as any,
+    expires: 1000 * 60 * 60 * 24 * 7 * 4 as any,
     sameSite: 'none',
   }
 } as SessionOptions
