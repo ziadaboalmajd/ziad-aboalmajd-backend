@@ -37,7 +37,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/comment/delete', deleteComment);
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
-    // app.get('/test/', test);
+    app.get('test1/test2/test/', test);
 };
 
 const test = async (req: Request, res: Response) => {
@@ -311,11 +311,12 @@ const sendMail = async (req: Request, res: Response) => {
         code: resCode,
         name: resAny[0].name
     };
-    transporter.sendMail(mailData, (error, info) => {
+    transporter.sendMail(mailData, (error) => {
         if (error) { return res.send(error); }
         return res.status(200).send({ message: "email has been sent", sent: true });
     });
 };
+
 
 const verifyReset = async (req: Request, res: Response) => {
     try {
