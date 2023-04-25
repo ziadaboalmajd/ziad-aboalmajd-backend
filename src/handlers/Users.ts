@@ -37,25 +37,6 @@ const usersRoutes = (app: express.Application) => {
     app.post('/comment/delete', deleteComment);
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
-    app.get('/test1/test2/test/', test);
-};
-
-const test = async (req: Request, res: Response) => {
-    try {
-        if (req.session.user) {
-            req.session.user = {
-                n: 1 + req.session.user.n
-            };
-        } else {
-            req.session.user = {
-                n: 1
-            };
-        }
-        return res.json({ req: req.session, get: "ziad", n: req.session.user.n });
-    } catch (err) {
-        res.status(400);
-        res.json(err);
-    }
 };
 
 const createUser = async (req: Request, res: Response) => {
