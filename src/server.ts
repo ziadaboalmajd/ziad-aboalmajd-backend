@@ -1,7 +1,5 @@
 // import express, { Request, Response} from "express";
-import express from "express";
-
-import pool from './database';
+import express, { Application } from "express";
 
 import cors from 'cors';
 
@@ -9,13 +7,7 @@ import bodyParser from "body-parser";
 
 import usersRoutes from "./handlers/Users";
 
-import session from 'express-session';
-
-import ConnetPg from "connect-pg-simple";
-
-const pgSession = ConnetPg(session);
-
-  (session);
+import session, { SessionOptions } from 'express-session';
 
 import dotenv from 'dotenv';
 
@@ -23,11 +15,7 @@ dotenv.config();
 
 const {
   COOKIE_SECRET,
-  POSTGRES_HOST,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-  POSTGRES_NAME,
-  POSTGRES_PORT,
+  ENVIRONMENT,
 } = process.env;
 
 const app: express.Application = express();
@@ -50,34 +38,7 @@ const port = 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-/*
-const PostgresqlStore = genFunc(session);
-const sessionStore = new PostgresqlStore({
-  conString: "postgres://" + POSTGRES_USER + ":" + POSTGRES_PASSWORD + "@" + POSTGRES_HOST + ":" + POSTGRES_PORT + "/" + POSTGRES_NAME,
-});
-*/
 
-const sessionConfig = {
-  store: new pgSession({
-    pool: pool,
-    tableName: 'usr_session'
-  }),
-  name: 'usr',
-  secret: COOKIE_SECRET ? COOKIE_SECRET : "XAFDSAD",
-  resave: false,
-  // resave: false,
-  proxy: true,
-  saveUninitialized: false,
-  // saveUninitialized: true,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  }
-};
-
-app.use(session(sessionConfig));
-
-
-/*
 app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
@@ -94,10 +55,9 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 * 7 * 4 as any,
     expires: 1000 * 60 * 60 * 24 * 7 * 4 as any,
     sameSite: 'none',
-  },
-  store: sessionStore
+  }
 } as SessionOptions
-));*/
+));
 
 usersRoutes(app);
 

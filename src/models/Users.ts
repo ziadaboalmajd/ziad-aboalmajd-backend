@@ -1,9 +1,9 @@
 import pool from '../database';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import  { JwtPayload } from 'jsonwebtoken';
 import { QueryResult } from 'pg';
 import dotenv from 'dotenv';
-import bcrypt, { genSalt } from 'bcrypt';
-import { User, NewUser, authUser, tokenUser, Comment, Upass } from '../types/User';
+import bcrypt from 'bcrypt';
+import { User, authUser, tokenUser, Comment, Upass } from '../types/User';
 
 const pepper: string = process.env.BCRYPT_PASSWORD as string;
 
