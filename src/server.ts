@@ -43,7 +43,7 @@ app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
   name: 'usr',
-  resave: true,
+  resave: false,
   // resave: false,
   proxy: true,
   // saveUninitialized: false,
@@ -52,7 +52,7 @@ app.use(session({
     // secure: ENVIRONMENT === "production" ? true : "auto",
     secure: true,
     httpOnly: false,
-    maxAge: 1000 * 60 * 60 * 24 * 7 * 4 as any,
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 4 * 10,
     expires: 1000 * 60 * 60 * 24 * 7 * 4 as any,
     sameSite: 'none',
   }
