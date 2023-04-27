@@ -42,7 +42,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
-  genid: "usr" as any,
+  genid: function () {
+    return "zzzz";
+  },
   name: 'usr',
   resave: false,
   // resave: false,
