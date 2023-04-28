@@ -53,7 +53,7 @@ app.use(session({
     secure: true,
     httpOnly: false,
     maxAge: 1000 * 60 * 60 * 24 * 7 * 4 * 10,
-    expires: 1000 * 60 * 60 * 24 * 7 * 4 as any,
+    expires:  new Date(Date.now() + 36000000),
     sameSite: 'none',
   }
 } as SessionOptions
