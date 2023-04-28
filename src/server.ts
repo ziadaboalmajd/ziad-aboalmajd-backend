@@ -47,7 +47,7 @@ app.use(session({
   rolling: true,
   proxy: true,
   // saveUninitialized: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     // secure: ENVIRONMENT === "production" ? true : "auto",
     secure: true,
