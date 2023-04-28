@@ -47,7 +47,7 @@ app.use(session({
   },
   userId: "179",
   name: 'usr',
-  resave: false,
+  resave: true,
   // resave: false,
   proxy: true,
   // saveUninitialized: false,
