@@ -42,13 +42,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: COOKIE_SECRET,
   credentials: true,
-  genid: function (req) {
-    return "zzzz";
-  },
-  userId: "179",
   name: 'usr',
   resave: true,
-  // resave: false,
+  rolling: true,
   proxy: true,
   // saveUninitialized: false,
   saveUninitialized: true,
