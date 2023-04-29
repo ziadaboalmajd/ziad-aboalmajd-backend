@@ -44,8 +44,7 @@ app.set('trust proxy', 1); // trust first proxy
 
 app.use(cookieSession({
   name: 'usrc',
-  keys: COOKIE_SECRET,
-  proxy: true,
+  keys: ['key1', 'key2'],
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
   expires: new Date(Date.now() + 9000000000),
   secure: true,
