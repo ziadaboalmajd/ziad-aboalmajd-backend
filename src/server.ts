@@ -1,4 +1,3 @@
-// import express, { Request, Response} from "express";
 import express from "express";
 
 import cors from 'cors';
@@ -7,27 +6,19 @@ import bodyParser from "body-parser";
 
 import usersRoutes from "./handlers/Users";
 
-import session, { SessionOptions } from 'express-session';
-
 import dotenv from 'dotenv';
 
 import cookieSession from 'cookie-session';
 
 dotenv.config();
 
-const {
-  COOKIE_SECRET,
-  ENVIRONMENT,
-} = process.env;
-
 const app: express.Application = express();
 
 const address: string = "0.0.0.:3000";
 
-// app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
 const corsOption = {
   origin: 'https://ziadaboalmajd.github.io',
-  credentials: true,            //access-control-allow-credentials:true
+  credentials: true,
   optionSuccessStatus: 200,
   methods: ['GET', 'POST']
 };
@@ -36,41 +27,20 @@ app.use(cors(corsOption));
 
 const port = 4000;
 
-// middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.set('trust proxy', 1); // trust first proxy
+app.set('trust proxy', 1);
 
 app.use(cookieSession({
   name: 'usrc',
   keys: ['key1', 'key2'],
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  expires: new Date(Date.now() + 9000000000),
+  maxAge: 24 * 60 * 60 * 1000 * 30 * 12,
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000 * 30 * 12),
   secure: true,
   httpOnly: false,
   sameSite: 'none',
 }));
-
-// app.use(session({
-//   secret: COOKIE_SECRET,
-//   credentials: true,
-//   name: 'usr',
-//   resave: true,
-//   rolling: true,
-//   proxy: true,
-//   // saveUninitialized: false,
-//   saveUninitialized: false,
-//   cookie: {
-//     // secure: ENVIRONMENT === "production" ? true : "auto",
-//     secure: true,
-//     httpOnly: false,
-//     maxAge: 1000 * 60 * 60 * 24 * 7 * 4 * 10 * 100,
-//     expires: new Date(Date.now() + 9000000000),
-//     sameSite: 'none',
-//   }
-// } as SessionOptions
-// ));
 
 usersRoutes(app);
 
