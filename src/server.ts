@@ -1,5 +1,5 @@
 // import express, { Request, Response} from "express";
-import express, { Application } from "express";
+import express from "express";
 
 import cors from 'cors';
 
@@ -10,6 +10,8 @@ import usersRoutes from "./handlers/Users";
 import session, { SessionOptions } from 'express-session';
 
 import dotenv from 'dotenv';
+
+import cookieSession from 'cookie-session';
 
 dotenv.config();
 
@@ -38,26 +40,36 @@ const port = 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-app.use(session({
-  secret: COOKIE_SECRET,
-  credentials: true,
-  name: 'usr',
-  resave: true,
-  rolling: true,
+app.use(cookieSession({
+  name: 'usrc',
+  keys: COOKIE_SECRET,
   proxy: true,
-  // saveUninitialized: false,
-  saveUninitialized: false,
-  cookie: {
-    // secure: ENVIRONMENT === "production" ? true : "auto",
-    secure: true,
-    httpOnly: false,
-    maxAge: 1000 * 60 * 60 * 24 * 7 * 4 * 10,
-    expires:  new Date(Date.now() + 36000000),
-    sameSite: 'none',
-  }
-} as SessionOptions
-));
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  expires: new Date(Date.now() + 9000000000),
+  secure: true,
+  httpOnly: false,
+  sameSite: 'none',
+}));
+
+// app.use(session({
+//   secret: COOKIE_SECRET,
+//   credentials: true,
+//   name: 'usr',
+//   resave: true,
+//   rolling: true,
+//   proxy: true,
+//   // saveUninitialized: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     // secure: ENVIRONMENT === "production" ? true : "auto",
+//     secure: true,
+//     httpOnly: false,
+//     maxAge: 1000 * 60 * 60 * 24 * 7 * 4 * 10 * 100,
+//     expires: new Date(Date.now() + 9000000000),
+//     sameSite: 'none',
+//   }
+// } as SessionOptions
+// ));
 
 usersRoutes(app);
 
