@@ -40,6 +40,8 @@ const port = 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.set('trust proxy', 1); // trust first proxy
+
 app.use(cookieSession({
   name: 'usrc',
   keys: COOKIE_SECRET,
