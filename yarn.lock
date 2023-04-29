@@ -192,6 +192,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/cookie-session@^2.0.44":
+  "integrity" "sha512-3DheOZ41pql6raSIkqEPphJdhA2dX2bkS+s2Qacv8YMKkoCbAIEXbsDil7351ARzMqvfyDUGNeHGiRZveIzhqQ=="
+  "resolved" "https://registry.npmjs.org/@types/cookie-session/-/cookie-session-2.0.44.tgz"
+  "version" "2.0.44"
+  dependencies:
+    "@types/express" "*"
+    "@types/keygrip" "*"
+
 "@types/cors@^2.8.12":
   "integrity" "sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw=="
   "resolved" "https://registry.npmjs.org/@types/cors/-/cors-2.8.12.tgz"
@@ -254,6 +262,11 @@
   "version" "8.5.8"
   dependencies:
     "@types/node" "*"
+
+"@types/keygrip@*":
+  "integrity" "sha512-GJhpTepz2udxGexqos8wgaBx4I/zWIDPh/KOGEwAqtuGDkOUJu5eFvwmdBX4AmB8Odsr+9pHCQqiAqDL/yKMKw=="
+  "resolved" "https://registry.npmjs.org/@types/keygrip/-/keygrip-1.0.2.tgz"
+  "version" "1.0.2"
 
 "@types/mime@^1":
   "integrity" "sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw=="
