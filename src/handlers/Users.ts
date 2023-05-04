@@ -52,9 +52,7 @@ const createUser = async (req: Request, res: Response) => {
         let token = "";
         if (resAny.login === true) {
             token = jwt.sign(user.password, process.env.JWT_KEY as string);
-            // const resId = resAny.response.rows[0].id;
             req.session.user = {
-                // id: resId,
                 username: (user.name),
                 token: token
             };
@@ -77,9 +75,7 @@ const authenticate = async (req: Request, res: Response) => {
         let token = "";
         if (resAny.login === true) {
             token = jwt.sign(req.body.password, process.env.JWT_KEY as string);
-            // const resId = resAny.response.rows[0].id;
             req.session.user = {
-                // id: resId,
                 username: (user.name),
                 token: token
             };
