@@ -176,6 +176,20 @@ const postComment = async (req: Request, res: Response) => {
     }
 };
 
+const postLike = async (req: Request, res: Response) => {
+    const user = {
+        id:req.body.id,
+        name: req.body.name
+    };
+    try {
+        const results = await UserStore.postComment(user);
+        return res.json(results);
+    } catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+};
+
 const getComment = async (req: Request, res: Response) => {
 
     try {

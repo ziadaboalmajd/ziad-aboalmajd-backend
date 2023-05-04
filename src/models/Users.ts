@@ -112,6 +112,33 @@ export class userStore {
         }
     };
 
+
+    async postLike(user: Comment): Promise<Response> {
+        try {
+            //Check emptyness of the incoming data
+            if ((!user.name || user.name.length < 2)) {
+                return { "message": 'error' } as any;
+            }
+            const commentExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM likes WHERE comid = '${user.id}');`);
+            if (commentExist.rows[0].exists === false) {
+                // add new comment (row) to table && add like to table 
+                //  to do likes insert as array[]
+                const newComment: QueryResult = await pool.query('INSERT INTO likes (comid, usrlk) VALUES ($2, ARRAY["$1"])', [user.name, user.id]);
+                return { like: newComment } as any;
+            }
+            const likeExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM likes WHERE comid = '${user.name}');`);
+            if (likeExist.rows[0].exists) {
+                // remove like to table 
+                const rLike: QueryResult = await pool.query('update likes set usrlk = array_remove(usrlk, "$1") WHERE comid =$2', [user.name, user.id]);
+                return { like: rLike } as any;
+            }
+            const nLike: QueryResult = await pool.query('update likes set usrlk = array_append(usrlk, "$1") WHERE comid =$2', [user.name, user.id]);
+            const response: QueryResult = await pool.query(`SELECT comid, unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
+            return { like: response, liks: nLike } as any;
+        } catch (err: any) {
+            return err + user;
+        }
+    };
     async deleteComment(user: Comment): Promise<Response> {
         try {
             if (!user.id || user.id.toString().length === 0) {
