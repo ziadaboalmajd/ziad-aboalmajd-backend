@@ -121,7 +121,6 @@ export class userStore {
             const commentExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM likes WHERE comid = '${user.id}');`);
             if (commentExist.rows[0].exists === false) {
                 // add new comment (row) to table && add like to table 
-                //  to do likes insert as array[]
                 const newComment: QueryResult = await pool.query('INSERT INTO likes (comid, usrlk) VALUES ($2, ARRAY[$1])', [user.name, user.id]);
                 return { like: newComment } as any;
             }
