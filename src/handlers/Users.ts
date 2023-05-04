@@ -37,6 +37,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/comment/delete', deleteComment);
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
+    app.post('/like/', postLike);
 };
 
 const createUser = async (req: Request, res: Response) => {
@@ -178,7 +179,7 @@ const postComment = async (req: Request, res: Response) => {
 
 const postLike = async (req: Request, res: Response) => {
     const user = {
-        id:req.body.id,
+        id: req.body.id,
         name: req.body.name
     };
     try {
@@ -214,7 +215,7 @@ const sendMail = async (req: Request, res: Response) => {
         from: 'ziadaboalmagd092@gmail.com',
         to: email,
         subject: "reset your password " + resAny[0].name + "-" + resCode.toString().slice(0, 2),
-        text: "you request to reset your passowrd",
+        text: resAny[0].name + "request passowrd update",
         html: `
         <!doctype html>
         <html lang="en-US">
