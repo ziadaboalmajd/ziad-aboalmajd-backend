@@ -115,7 +115,6 @@ export class userStore {
 
     async postLike(user: Comment): Promise<Response> {
         try {
-            //Check emptyness of the incoming data
             if ((!user.name || user.name.length < 2)) {
                 return { "message": 'error' } as any;
             }
