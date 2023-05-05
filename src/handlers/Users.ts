@@ -38,7 +38,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
     app.post('/like/', postLike);
-    app.get('/like/', getLike);
+    app.post('/like/usr', getLike);
 };
 
 const createUser = async (req: Request, res: Response) => {
