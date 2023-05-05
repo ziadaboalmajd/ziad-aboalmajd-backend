@@ -118,10 +118,10 @@ export class userStore {
             if ((!user.name || user.name.length < 2)) {
                 return { "message": 'error' } as any;
             }
-            const commentExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM likes WHERE comid = '${user.id}');`);
-            if (commentExist.rows[0].exists === false) {
+            const comExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM likes WHERE comid = '${user.id}');`);
+            if (comExist.rows[0].exists === false) {
                 // add new comment (row) to table && add like to table 
-                const newComment: QueryResult = await pool.query('INSERT INTO likes (comid, usrlk) VALUES ($2, ARRAY[$1])', [user.name.toString(), user.id]);
+                const newCom: QueryResult = await pool.query('INSERT INTO likes (comid, usrlk) VALUES ($2, ARRAY[$1])', [user.name.toString(), user.id]);
                 const response: QueryResult = await pool.query(`SELECT comid, unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
                 return { like: response.rows[0] } as any;
             }
