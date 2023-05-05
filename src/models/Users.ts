@@ -122,19 +122,19 @@ export class userStore {
             if (comExist.rows[0].exists === false) {
                 // add new comment (row) to table && add like to table 
                 const newCom: QueryResult = await pool.query('INSERT INTO likes (comid, usrlk) VALUES ($2, ARRAY[$1])', [user.name.toString(), user.id]);
-                const response: QueryResult = await pool.query(`SELECT usrlk from likes WHERE comid = $1`, [user.id]);
+                const response: QueryResult = await pool.query(`SELECT unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
                 return { like: response.rows } as any;
             }
             const likeExist: QueryResult = await pool.query(`SELECT EXISTS(SELECT usrlk  FROM likes WHERE comid = ${user.id} AND usrlk @> '{${user.name.toString()}}');`);
             if (likeExist.rows[0].exists) {
                 // remove like to table 
                 const rLike: QueryResult = await pool.query('update likes set usrlk = array_remove(usrlk, $1) WHERE comid =$2', [user.name.toString(), user.id]);
-                const response: QueryResult = await pool.query(`SELECT usrlk from likes WHERE comid = $1`, [user.id]);
+                const response: QueryResult = await pool.query(`SELECT unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
                 // const response: QueryResult = await pool.query(`SELECT comid, unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
                 return { like: response.rows } as any;
             }
             const nLike: QueryResult = await pool.query('update likes set usrlk = array_append(usrlk, $1) WHERE comid =$2', [user.name.toString(), user.id]);
-            const response: QueryResult = await pool.query(`SELECT usrlk from likes WHERE comid = $1`, [user.id]);
+            const response: QueryResult = await pool.query(`SELECT unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
             return { like: response.rows } as any;
         } catch (err: any) {
             return err + user;
