@@ -113,44 +113,44 @@ export class userStore {
     };
 
 
-    async getLike(): Promise<Response> {
+    async getLike(id: Comment): Promise<Response> {
         try {
-            const response: QueryResult = await pool.query(`SELECT comid, usrlk from likes;`);
+            const response: QueryResult = await pool.query(`select comid from likes where '${id}' = ANY (usrlk);`);
             return response.rows as any;
         } catch (err: any) {
-            return err ;
+            return err;
         }
     };
 
     async postLike(user: Comment): Promise<Response> {
         try {
             if ((!user.name || user.name.length < 2)) {
-                return { "message": 'error' } as any;
+                return 'error' as any;
             }
             const comExist: QueryResult = await pool.query(`SELECT EXISTS (SELECT 1 FROM likes WHERE comid = '${user.id}');`);
             if (comExist.rows[0].exists === false) {
                 // add new comment (row) to table && add like to table 
                 const newCom: QueryResult = await pool.query('INSERT INTO likes (comid, usrlk) VALUES ($2, ARRAY[$1])', [user.name.toString(), user.id]);
-                const response: QueryResult = await pool.query(`select comid from likes where '${user.id}' = ANY (usrlk);`);
-                return response.rows as any;
+                // const response: QueryResult = await pool.query(`select comid from likes where '${user.id}' = ANY (usrlk);`);
+                return "like" as any;
             }
             const likeExist: QueryResult = await pool.query(`SELECT EXISTS(SELECT usrlk  FROM likes WHERE comid = ${user.id} AND usrlk @> '{${user.name.toString()}}');`);
             if (likeExist.rows[0].exists) {
                 // remove like to table 
                 const rLike: QueryResult = await pool.query('update likes set usrlk = array_remove(usrlk, $1) WHERE comid =$2', [user.name.toString(), user.id]);
-                const response: QueryResult = await pool.query(`select comid from likes where '${user.id}' = ANY (usrlk);`);
+                // const response: QueryResult = await pool.query(`select comid from likes where '${user.id}' = ANY (usrlk);`);
                 // const response: QueryResult = await pool.query(`SELECT unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
                 // const response: QueryResult = await pool.query(`SELECT comid, unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
-                return response.rows as any;
+                return "unlike" as any;
             }
             const nLike: QueryResult = await pool.query('update likes set usrlk = array_append(usrlk, $1) WHERE comid =$2', [user.name.toString(), user.id]);
-            const response: QueryResult = await pool.query(`select comid from likes where '${user.id}' = ANY (usrlk);`);
-            return response.rows as any;
+            // const response: QueryResult = await pool.query(`select comid from likes where '${user.id}' = ANY (usrlk);`);
+            return "like" as any;
         } catch (err: any) {
             return err + user;
         }
     };
-    
+
     async deleteComment(user: Comment): Promise<Response> {
         try {
             if (!user.id || user.id.toString().length === 0) {

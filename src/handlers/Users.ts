@@ -189,8 +189,9 @@ const postLike = async (req: Request, res: Response) => {
 };
 
 const getLike = async (req: Request, res: Response) => {
+
     try {
-        const results = await UserStore.getLike();
+        const results = await UserStore.getLike(req.body.id);
         return res.json(results);
     } catch (err) {
         res.status(400);
