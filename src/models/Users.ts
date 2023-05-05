@@ -128,11 +128,12 @@ export class userStore {
             if (likeExist.rows[0].exists) {
                 // remove like to table 
                 const rLike: QueryResult = await pool.query('update likes set usrlk = array_remove(usrlk, $1) WHERE comid =$2', [user.name.toString(), user.id]);
-                return { like: rLike } as any;
+                const response: QueryResult = await pool.query(`SELECT comid, unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
+                return { like: response.rows } as any;
             }
             const nLike: QueryResult = await pool.query('update likes set usrlk = array_append(usrlk, $1) WHERE comid =$2', [user.name.toString(), user.id]);
             const response: QueryResult = await pool.query(`SELECT comid, unnest(usrlk) from likes WHERE comid = $1`, [user.id]);
-            return { like: response, liks: nLike } as any;
+            return { like: response.rows } as any;
         } catch (err: any) {
             return err + user;
         }
