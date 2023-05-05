@@ -179,7 +179,7 @@ const postLike = async (req: Request, res: Response) => {
         name: req.body.name
     };
     try {
-        const results = await UserStore.postComment(user);
+        const results = await UserStore.postLike(user);
         return res.json(results);
     } catch (err) {
         res.status(400);
