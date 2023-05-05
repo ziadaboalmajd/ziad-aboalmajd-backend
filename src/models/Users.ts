@@ -127,7 +127,7 @@ export class userStore {
         try {
             const response: QueryResult = await pool.query(`select cardinality(usrlk) from likes ORDER BY id ASC ;`);
             // const response: QueryResult = await pool.query(`select comid from likes where '${user}' = ANY (usrlk);`);
-            return response as any;
+            return response.rows as any;
         } catch (err: any) {
             return err;
         }
