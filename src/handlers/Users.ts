@@ -38,6 +38,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/sendmail/', sendMail);
     app.get('/rstmail/', verifyReset);
     app.post('/like/', postLike);
+    app.get('/like/', getLike);
 };
 
 const createUser = async (req: Request, res: Response) => {
@@ -180,6 +181,16 @@ const postLike = async (req: Request, res: Response) => {
     };
     try {
         const results = await UserStore.postLike(user);
+        return res.json(results);
+    } catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+};
+
+const getLike = async (req: Request, res: Response) => {
+    try {
+        const results = await UserStore.getLike();
         return res.json(results);
     } catch (err) {
         res.status(400);

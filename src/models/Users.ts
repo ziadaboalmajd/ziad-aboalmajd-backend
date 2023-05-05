@@ -113,6 +113,15 @@ export class userStore {
     };
 
 
+    async getLike(): Promise<Response> {
+        try {
+            const response: QueryResult = await pool.query(`SELECT * from likes;`);
+            return response.rows as any;
+        } catch (err: any) {
+            return err ;
+        }
+    };
+
     async postLike(user: Comment): Promise<Response> {
         try {
             if ((!user.name || user.name.length < 2)) {
@@ -140,6 +149,7 @@ export class userStore {
             return err + user;
         }
     };
+    
     async deleteComment(user: Comment): Promise<Response> {
         try {
             if (!user.id || user.id.toString().length === 0) {
