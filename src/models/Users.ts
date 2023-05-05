@@ -123,6 +123,16 @@ export class userStore {
         }
     };
 
+    async getNlike(): Promise<Response> {
+        try {
+            const response: QueryResult = await pool.query(`select comid, cardinality(usrlk) from likes;`);
+            // const response: QueryResult = await pool.query(`select comid from likes where '${user}' = ANY (usrlk);`);
+            return response.rows as any;
+        } catch (err: any) {
+            return err;
+        }
+    };
+
     async postLike(user: Comment): Promise<Response> {
         try {
             if ((!user.name || user.name.length < 2)) {
