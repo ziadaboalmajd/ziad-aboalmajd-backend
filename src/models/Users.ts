@@ -125,9 +125,9 @@ export class userStore {
 
     async getNlike(): Promise<Response> {
         try {
-            const response: QueryResult = await pool.query(`select comid, cardinality(usrlk) from likes;`);
+            const response: QueryResult = await pool.query(`select comid, cardinality(usrlk) from likes ORDER BY id ASC ;`);
             // const response: QueryResult = await pool.query(`select comid from likes where '${user}' = ANY (usrlk);`);
-            return response.rows as any;
+            return response.rows[0].cardinality as any;
         } catch (err: any) {
             return err;
         }
