@@ -117,7 +117,7 @@ export class userStore {
         try {
             const response: QueryResult = await pool.query(`select array_agg(comid) from likes where '${user}' = ANY (usrlk);`);
             // const response: QueryResult = await pool.query(`select comid from likes where '${user}' = ANY (usrlk);`);
-            return response.rows as any;
+            return response.rows[0].array_agg as any;
         } catch (err: any) {
             return err;
         }
