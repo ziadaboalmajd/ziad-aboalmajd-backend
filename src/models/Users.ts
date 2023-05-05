@@ -115,7 +115,7 @@ export class userStore {
 
     async getLike(): Promise<Response> {
         try {
-            const response: QueryResult = await pool.query(`SELECT * from likes;`);
+            const response: QueryResult = await pool.query(`SELECT comid, usrlk from likes;`);
             return response.rows as any;
         } catch (err: any) {
             return err ;
