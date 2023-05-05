@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "update": "npm install -g npm@9.6.6",
     "clean": "rm -rf  ./build/server.js|| true",
-    "build": "npm run update && npm run clean && npx tsc",
+    "build": "npm run clean && npx tsc",
     "start": "node ./build/server.js",
     "lint": "eslint . --ext .ts ",
     "tsc": "tsc",
