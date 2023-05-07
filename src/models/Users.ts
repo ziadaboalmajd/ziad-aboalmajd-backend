@@ -83,7 +83,7 @@ export class userStore {
             }
             const mail: QueryResult = await pool.query(`SELECT email FROM users WHERE name = '${user.name}';`);
             const response: QueryResult = await pool.query(`SELECT age, gen FROM usrinfo WHERE name = '${user.name}';`);
-            return [mail.rows[0].email, response.rows] as any;
+            return [mail.rows[0].email, response.rows[0].age, response.rows[0].gen] as any;
         } catch (error) {
             return error as any;
         }
