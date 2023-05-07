@@ -3,7 +3,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import { QueryResult } from 'pg';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { User, authUser, tokenUser, Comment, Upass } from '../types/User';
+import { User, authUser, tokenUser, Comment, Upass, UserInfo } from '../types/User';
 
 const pepper: string = process.env.BCRYPT_PASSWORD as string;
 
@@ -57,6 +57,33 @@ export class userStore {
                 return { "login": false, "message": 'Wrong password' } as any;
             }
             return { "login": true, "message": 'login successfully' } as any;
+        } catch (error) {
+            return error as any;
+        }
+    };
+
+    async postUsrI(user: UserInfo): Promise<Response> {
+        try {
+            //Check emptyness of the incoming data
+            if ((!user.name || !user.age || !user.gen) || (user.name.length <= 3 || user.age.toString().length === 0 || user.gen.toString().length === 0)) {
+                return "error" as any;
+            }
+            const response = await pool.query('INSERT INTO usrInfo (name, age, gen) VALUES ($1, $2, $3)', [user.name, user.age, user.gen]);
+            return "sent" as any;
+        } catch (error) {
+            return error as any;
+        }
+    };
+
+    async getUsrI(user: UserInfo): Promise<Response> {
+        try {
+            //Check emptyness of the incoming data
+            if ((!user.name) || (user.name.length <= 3)) {
+                return "error" as any;
+            }
+            const mail: QueryResult = await pool.query(`SELECT email FROM users WHERE name = '${user.name}';`);
+            const response: QueryResult = await pool.query(`SELECT name, age, gen FROM usrInfo WHERE name = '${user.name}';`);
+            return [mail.rows[0], response.rows[0]] as any;
         } catch (error) {
             return error as any;
         }

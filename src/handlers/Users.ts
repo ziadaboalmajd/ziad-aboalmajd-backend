@@ -40,6 +40,8 @@ const usersRoutes = (app: express.Application) => {
     app.post('/like/', postLike);
     app.post('/like/usr', getLike);
     app.get('/like/nusr', getNlike);
+    app.post('/usr/info', postUsrI);
+    app.post('/usr/info/get', getUsrI);
 };
 
 const createUser = async (req: Request, res: Response) => {
@@ -83,6 +85,32 @@ const authenticate = async (req: Request, res: Response) => {
             };
         }
         return res.status(200).json({ message: resAny.message, login: resAny.login, user: user.name });
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
+
+const postUsrI = async (req: Request, res: Response) => {
+    const user = {
+        name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase(),
+        gen: Number(req.body.gen),
+        age: Number(req.body.age)
+    };
+    try {
+        const results = await UserStore.postUsrI(user);
+        return res.status(200).send(results);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
+
+const getUsrI = async (req: Request, res: Response) => {
+    const user = {
+        name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase()
+    };
+    try {
+        const results = await UserStore.getUsrI(user);
+        return res.status(200).json(results);
     } catch (err) {
         res.status(400).send(err);
     }

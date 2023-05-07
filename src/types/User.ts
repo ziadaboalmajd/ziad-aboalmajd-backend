@@ -4,6 +4,11 @@ export type NewUser = {
     newName: String;
     newPassword: String;
 };
+export type UserInfo = {
+    name: String;
+    gen?: Number;
+    age?: Number;
+};
 export type authUser = {
     name: String;
     password: String;
