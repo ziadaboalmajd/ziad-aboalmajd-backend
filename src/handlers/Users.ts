@@ -93,8 +93,8 @@ const authenticate = async (req: Request, res: Response) => {
 const postUsrI = async (req: Request, res: Response) => {
     const user = {
         name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase(),
-        gen: Number(req.body.gen),
-        age: Number(req.body.age)
+        gen: req.body.gen,
+        age: req.body.age
     };
     try {
         const results = await UserStore.postUsrI(user);
