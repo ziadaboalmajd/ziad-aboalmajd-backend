@@ -68,7 +68,7 @@ export class userStore {
             if ((!user.name || !user.age || !user.gen) || (user.name.length <= 3 || user.age.toString().length === 0 || user.gen.toString().length === 0)) {
                 return "error" as any;
             }
-            const response = await pool.query('INSERT INTO usrInfo (name, age, gen) VALUES ($1, $2, $3)', [user.name, Number(user.age), Number(user.gen)]);
+            const response = await pool.query('INSERT INTO usrinfo (name, age, gen) VALUES ($1, $2, $3)', [user.name, Number(user.age), Number(user.gen)]);
             return "sent" as any;
         } catch (error) {
             return error as any;
@@ -82,7 +82,7 @@ export class userStore {
                 return "error" as any;
             }
             const mail: QueryResult = await pool.query(`SELECT email FROM users WHERE name = '${user.name}';`);
-            const response: QueryResult = await pool.query(`SELECT name, age, gen FROM usrInfo WHERE name = '${user.name}';`);
+            const response: QueryResult = await pool.query(`SELECT name, age, gen FROM usrinfo WHERE name = '${user.name}';`);
             return [mail.rows[0], response.rows[0]] as any;
         } catch (error) {
             return error as any;
