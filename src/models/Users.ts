@@ -65,7 +65,7 @@ export class userStore {
     async postUsrI(user: UserInfo): Promise<Response> {
         try {
             //Check emptyness of the incoming data
-            if ((!user.name || !user.age || !user.gen) || (user.name.length <= 3 || user.age.toString().length === 0 || user.gen.toString().length === 0)) {
+            if ((!user.name || !user.age || !user.gen) || (user.name.length <= 3 || user.age.toString().length !== 0 || user.gen.toString().length !== 0)) {
                 return "error" as any;
             }
             const response = await pool.query('INSERT INTO usrInfo (name, age, gen) VALUES ($1, $2, $3)', [user.name, user.age, user.gen]);
