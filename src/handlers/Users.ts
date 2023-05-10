@@ -40,6 +40,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/like/', postLike);
     app.post('/like/usr', getLike);
     app.get('/like/nusr', getNlike);
+    app.post('/like/rmv', deleteLike);
     app.post('/usr/info', postUsrI);
     app.post('/usr/info/get', getUsrI);
 };
@@ -210,6 +211,18 @@ const postLike = async (req: Request, res: Response) => {
     };
     try {
         const results = await UserStore.postLike(user);
+        return res.json(results);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+
+const deleteLike = async (req: Request, res: Response) => {
+    const user = {
+        id: req.body.id,
+    };
+    try {
+        const results = await UserStore.postLike(user.id);
         return res.json(results);
     } catch (err) {
         res.status(400).json(err);
