@@ -222,7 +222,7 @@ const deleteLike = async (req: Request, res: Response) => {
         id: req.body.id,
     };
     try {
-        const results = await UserStore.postLike(user.id);
+        const results = await UserStore.deleteLike(user.id);
         return res.json(results);
     } catch (err) {
         res.status(400).json(err);

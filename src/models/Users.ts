@@ -160,7 +160,7 @@ export class userStore {
         }
     };
 
-    async deletelike(user: UserInfo): Promise<Response> {
+    async deleteLike(user: UserInfo): Promise<Response> {
         try {
             const response: QueryResult = await pool.query(`DELETE FROM likes WHERE comid = '${user}';`);
             return response.rows as any;
