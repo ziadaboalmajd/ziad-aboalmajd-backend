@@ -43,6 +43,16 @@ const usersRoutes = (app: express.Application) => {
     app.post('/like/rmv', deleteLike);
     app.post('/usr/info', postUsrI);
     app.post('/usr/info/get', getUsrI);
+    app.post("/ziad", ziad);
+};
+
+const ziad = async (req: Request, res: Response) => {
+    try {
+        res.status(200).json(req.body);
+    } catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 };
 
 const createUser = async (req: Request, res: Response) => {
