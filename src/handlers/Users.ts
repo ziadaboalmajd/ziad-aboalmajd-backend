@@ -43,12 +43,24 @@ const usersRoutes = (app: express.Application) => {
     app.post('/like/rmv', deleteLike);
     app.post('/usr/info', postUsrI);
     app.post('/usr/info/get', getUsrI);
-    app.post("/ziad", ziad);
+    app.post("/ziad", ziadp);
+    app.get("/ziad", ziadp);
 };
 
-const ziad = async (req: Request, res: Response) => {
+let ztest : any;
+
+const ziadp = async (req: Request, res: Response) => {
     try {
+        ztest = req.body;
         res.status(200).json(req.body);
+    } catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+};
+const ziadg = async (req: Request, res: Response) => {
+    try {
+        res.status(200).json(ztest) ;
     } catch (err) {
         res.status(400);
         res.json(err);
