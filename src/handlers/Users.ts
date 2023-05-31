@@ -44,7 +44,7 @@ const usersRoutes = (app: express.Application) => {
     app.post('/usr/info', postUsrI);
     app.post('/usr/info/get', getUsrI);
     app.post("/ziad", ziadp);
-    app.get("/ziad", ziadp);
+    app.get("/ziad", ziadg);
 };
 
 let ztest : any;
