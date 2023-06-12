@@ -17,7 +17,7 @@ const app: express.Application = express();
 const address: string = "0.0.0.:3000";
 
 const corsOption = {
-  origin: 'http://localhost:3000/',
+  origin: 'http://localhost:3000',
   credentials: true,
   optionSuccessStatus: 200,
   methods: ['GET', 'POST']
