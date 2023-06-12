@@ -51,8 +51,8 @@ const ztest: any = [];
 
 const ziadp = async (req: Request, res: Response) => {
     try {
-        ztest.push(req.body);
-        res.status(200).json(req.body);
+        ztest.push(req.body.id);
+        res.status(200).json(req.body.id);
     } catch (err) {
         res.status(400);
         res.json(err);
