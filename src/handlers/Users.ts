@@ -47,11 +47,11 @@ const usersRoutes = (app: express.Application) => {
     app.get("/ziad", ziadg);
 };
 
-let ztest : any;
+const ztest: any = [];
 
 const ziadp = async (req: Request, res: Response) => {
     try {
-        ztest = req.body;
+        ztest.push(req.body.Invoice.client_first_name);
         res.status(200).json(req.body);
     } catch (err) {
         res.status(400);
@@ -60,7 +60,7 @@ const ziadp = async (req: Request, res: Response) => {
 };
 const ziadg = async (req: Request, res: Response) => {
     try {
-        res.status(200).json(ztest) ;
+        res.status(200).json(ztest);
     } catch (err) {
         res.status(400);
         res.json(err);
