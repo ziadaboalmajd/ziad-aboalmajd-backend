@@ -71,7 +71,7 @@ const createUser = async (req: Request, res: Response) => {
     const user = {
         name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase(),
         email: req.body.email.replace(/\s/g, "").toLowerCase(),
-        password: req.body.password.replace(/^\s+|\s+$/gm, '').toLowerCase()
+        password: req.body.password.replace(/^\s+|\s+$/gm, '')//.toLowerCase()
     };
     try {
         const results = await UserStore.createUser(user);
@@ -94,7 +94,7 @@ const createUser = async (req: Request, res: Response) => {
 const authenticate = async (req: Request, res: Response) => {
     const user = {
         name: req.body.name.replace(/^\s+|\s+$/gm, '').toLowerCase(),
-        password: req.body.password.replace(/^\s+|\s+$/gm, '').toLowerCase()
+        password: req.body.password.replace(/^\s+|\s+$/gm, '')//.toLowerCase()
     };
     try {
         const results = await UserStore.authenticate(user);
@@ -169,7 +169,7 @@ const updatePass = async (req: Request, res: Response) => {
         const user = {
             name: req.session.user.name,
             pass: req.body.pass,
-            cpass: req.body.cpass.replace(/^\s+|\s+$/gm, '').toLowerCase(),
+            cpass: req.body.cpass.replace(/^\s+|\s+$/gm, '')//.toLowerCase(),
         };
         try {
             const results = await UserStore.updatePass(user);
